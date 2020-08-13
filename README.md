@@ -2,7 +2,8 @@
 
 ## What is this
 
-GEM-balls is a powerful machine learning algorithm for classification.
+GEM-balls is a powerful machine learning algorithm for classification. 
+
 You can find all the information about it in the original paper:
 
 ["A New Classification Algorithm With Guaranteed Sensitivity and Specificity for Medical Applications",
