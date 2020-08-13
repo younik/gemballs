@@ -2,7 +2,7 @@
 
 ## What is this
 
-GEM-balls is a powerful machine learning algorithm for classification. 
+GEM-balls is a powerful machine learning algorithm for binary classification. 
 
 You can find all the information about it in the original paper:
 
