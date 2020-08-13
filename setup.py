@@ -13,8 +13,6 @@ setup(
     keywords=['MACHINE LEARNING', 'GEM-balls', 'CLASSIFICATION'],
     install_requires=[
         'numpy',
-        'multiprocessing',
-        'os',
         'scipy'
     ],
     classifiers=[
