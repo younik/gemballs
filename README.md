@@ -20,7 +20,7 @@ You can install the package using pip:
 ## Simple usage
   
     from sklearn.model_selection import train_test_split
-    from sklearn.datasets import make_moons
+    from sklearn.datasets import make_circles
     from gemballs.gemballspollingclassifier import GEMBallsPollingClassifier
 
     # make some artificial data
