@@ -40,6 +40,6 @@ You can install the package using pip:
     # show the score
     print(gemballs.score(X_test, y_test))
 
-## Plot
+## Plots
 
 ![Plot](/plot.png)
