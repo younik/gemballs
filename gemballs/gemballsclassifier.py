@@ -26,7 +26,8 @@ class GEMBallsClassifier:
         while True:
             opposite_label = 1-current_y
             features_labels.sort(key=lambda f_l: np.linalg.norm(f_l[0] - current_x))
-            opposite_positions = np.nonzero(np.array([f_l[1] for f_l in features_labels]) == opposite_label)[0]
+            opposite_positions = [index for index, x_y in enumerate(features_labels) 
+                                  if x_y[1] == opposite_label]
             support_position = opposite_positions[:self.c[opposite_label]]
             if self.c[opposite_label] > len(support_position):
                 self.classifier.append([current_x, float('Inf'), current_y])
