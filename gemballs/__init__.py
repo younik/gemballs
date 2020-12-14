@@ -1,5 +1,6 @@
 from .gemballspollingclassifier import GEMBallsPollingClassifier
-from .gemballsclassifier_kdtree import GEMBallsKDTree
 from .gemballsclassifier import GEMBallsClassifier
+from ._gemballs_brute import _GEMBallsBrute
+from ._gemballs_kdtree import _GEMBallsKDTree
 
-__all__ = ['GEMBallsClassifier', 'GEMBallsKDTree', 'GEMBallsPollingClassifier']
+__all__ = ['GEMBallsClassifier', 'GEMBallsPollingClassifier']
