@@ -73,8 +73,7 @@ class GEMBallsPollingClassifier:
         max_classifiers = min(len(x), self.max_classifiers)
 
         pool = Pool(num_of_threads)
-        self.classifiers = pool.starmap(self._fit_single,
-                                        [(x, y, i) for i in range(0, max_classifiers)])  # multithreading fit
+        self.classifiers = pool.starmap(self._fit_single, [(x, y, i) for i in range(max_classifiers)])
 
     def _fit_single(self, x, y, start_index):
         gemballs = GEMBallsClassifier(c0=self.c[0], c1=self.c[1], algorithm=self.algorithm)
@@ -106,6 +105,24 @@ class GEMBallsPollingClassifier:
         y : array of shape (n_queries, 2)
             Estimated probabilities of belonging to class 0 and class 1 respectively for each given target sample.
 
+        Examples
+        --------
+        >>> from gemballs import GEMBallsPollingClassifier
+        >>> from sklearn.model_selection import train_test_split
+        >>> from sklearn.datasets import make_circles
+        >>> features, labels = make_circles(n_samples=20, noise=0.2, factor=0.5, random_state=666)
+        >>> X_train, X_test, y_train, y_test = \
+                train_test_split(features, labels, test_size=.3, random_state=7)
+        >>> gemballs = GEMBallsPollingClassifier()
+        >>> gemballs.fit(X_train, y_train)
+        >>> gemballs.predict_proba(X_test)
+        [[0.90909091 0.09090909]
+        [0.90909091 0.09090909]
+        [0.03896104 0.96103896]
+        [0.62337662 0.37662338]
+        [0.22077922 0.77922078]
+        [0.90909091 0.09090909]]
+
         """
 
         if len(self.classifiers) == 0:
@@ -119,22 +136,21 @@ class GEMBallsPollingClassifier:
 
         pool = Pool(num_of_threads)
         predictions, weights = zip(*pool.starmap(self._predict_proba_single,
-                                                 [(x, f, cl) for cl in best_classifiers]))  # multithreading predict
-
-        np.asarray(weights)
-        np.asarray(predictions)
+                                                 [(x, f(cl.k[0] + cl.k[1], cl.n[0] + cl.n[1] + 1), cl)
+                                                  for cl in best_classifiers]))
+        weights = np.asarray(weights)
+        predictions = np.asarray(predictions)
 
         y = np.transpose(predictions).dot(weights)
         y = y / weights.sum()
 
+        y = y.reshape(-1, 1)
         y = y.round(10)  # to avoid approximation problems (ex. probability >1)
         return np.append(1 - y, y, axis=1)  # {prob_for_class_0, prob_for_class_1}
 
     @staticmethod
-    def _predict_proba_single(x, weight_function, classifier):
-        k_tot = classifier.k[0] + classifier.k[1]
-        n_plus_one = classifier.n[0] + classifier.n[1] + 1
-        y = [classifier.predict(x), weight_function(k_tot, n_plus_one)]
+    def _predict_proba_single(x, weight, classifier):
+        y = [classifier.predict(x), weight]
         return y
 
     def predict(self, x, f=lambda k_tot, dim_plus_one: dim_plus_one - k_tot, perc=1, num_of_threads=1):
@@ -161,6 +177,19 @@ class GEMBallsPollingClassifier:
         -------
         y : array of shape (n_queries,)
             Predicted class labels for each data sample.
+
+        Examples
+        --------
+        >>> from gemballs import GEMBallsPollingClassifier
+        >>> from sklearn.model_selection import train_test_split
+        >>> from sklearn.datasets import make_circles
+        >>> features, labels = make_circles(n_samples=40, noise=0.2, factor=0.5, random_state=666)
+        >>> X_train, X_test, y_train, y_test = \
+                train_test_split(features, labels, test_size=.3, random_state=7)
+        >>> gemballs = GEMBallsPollingClassifier()
+        >>> gemballs.fit(X_train, y_train)
+        >>> gemballs.predict(X_test)
+        [1 0 1 0 1 1 0 0 1 0 1 0]
 
         """
 
@@ -194,6 +223,19 @@ class GEMBallsPollingClassifier:
         -------
         score : float
             The accuracy of the predicted labels of x with respect to y.
+
+        Examples
+        --------
+        >>> from gemballs import GEMBallsPollingClassifier
+        >>> from sklearn.model_selection import train_test_split
+        >>> from sklearn.datasets import make_circles
+        >>> features, labels = make_circles(n_samples=20, noise=0.2, factor=0.5, random_state=666)
+        >>> X_train, X_test, y_train, y_test = \
+                train_test_split(features, labels, test_size=.3, random_state=7)
+        >>> gemballs = GEMBallsPollingClassifier()
+        >>> gemballs.fit(X_train, y_train)
+        >>> gemballs.score(X_test, y_test)
+        0.8
 
         """
 

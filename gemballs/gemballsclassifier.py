@@ -1,6 +1,6 @@
 import abc
 import numpy as np
-import _gemballs_kdtree
+
 
 class Ball:
     """
@@ -83,8 +83,10 @@ class GEMBallsClassifier:
     algorithm_name = None
 
     def __new__(cls, algorithm='kd_tree', **kwargs):
-        implementations = cls.get_algorithms()
+        if cls != GEMBallsClassifier and issubclass(cls, GEMBallsClassifier):
+            return super(GEMBallsClassifier, cls).__new__(cls)
 
+        implementations = cls.get_algorithms()
         if algorithm not in implementations:
             raise ValueError("Unknown algorithm '%s'" % algorithm)
 
