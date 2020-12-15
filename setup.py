@@ -3,13 +3,13 @@ from distutils.core import setup
 setup(
     name='gemballs',
     packages=['gemballs'],
-    version='0.3',
+    version='0.3.1',
     license='https://github.com/Kaysman/gemballs/blob/master/LICENSE.md',
     description='A powerful machine learning algorithm for binary classification',
     author='Omar Younis',
     author_email='omar.younis98@gmail.com',
-    url='https://github.com/Kaysman/gemballs',
-    download_url='https://github.com/Kaysman/gemballs/archive/0.3.tar.gz',
+    url='https://github.com/younik/gemballs',
+    download_url='https://github.com/younik/gemballs/archive/0.3.1.tar.gz',
     keywords=['MACHINE LEARNING', 'GEM-balls', 'CLASSIFICATION'],
     install_requires=[
         'numpy',
