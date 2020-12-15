@@ -37,7 +37,7 @@ You can install the package using pip:
 
     # now the model is fitted, we can predict value
 
-    # show the score
+    # print accuracy
     print(gemballs.score(X_test, y_test))
 
 ## Plots
