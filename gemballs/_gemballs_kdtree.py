@@ -1,6 +1,6 @@
 import numpy as np
 from scipy.spatial import cKDTree
-from .gemballsclassifier import GEMBallsClassifier, Ball
+from gemballs.gemballsclassifier import GEMBallsClassifier, Ball
 
 
 class _GEMBallsKDTree(GEMBallsClassifier):
@@ -47,7 +47,7 @@ class _GEMBallsKDTree(GEMBallsClassifier):
 
             else:
                 support_distances, support_indices = trees[opposite_label].query(current_point, self.c[opposite_label])
-                if type(support_distances) is not list:
+                if type(support_distances) is not np.ndarray:
                     support_distances = [support_distances]
                     support_indices = [support_indices]
                 edge_point = trees[opposite_label].data[support_indices[-1]]

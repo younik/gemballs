@@ -1,6 +1,6 @@
 import numpy as np
 from multiprocessing import Pool
-from .gemballsclassifier import GEMBallsClassifier
+from gemballs.gemballsclassifier import GEMBallsClassifier
 
 
 class GEMBallsPollingClassifier:

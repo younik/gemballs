@@ -9,7 +9,7 @@ setup(
     author='Omar Younis',
     author_email='omar.younis98@gmail.com',
     url='https://github.com/younik/gemballs',
-    download_url='https://github.com/younik/gemballs/archive/0.3.1.tar.gz',
+    download_url='https://github.com/younik/gemballs/archive/v0.3.1.tar.gz',
     keywords=['MACHINE LEARNING', 'GEM-balls', 'CLASSIFICATION'],
     install_requires=[
         'numpy',
