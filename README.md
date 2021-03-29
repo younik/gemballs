@@ -35,7 +35,7 @@ You can install the package using pip:
     # fit the model
     gemballs.fit(X_train, y_train)
 
-    # now the model is fitted, we can predict value
+    # now the model is fitted, we can predict values
 
     # print accuracy
     print(gemballs.score(X_test, y_test))
